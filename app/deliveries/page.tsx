@@ -1,14 +1,14 @@
 import { Sidebar } from "@/components/Sidebar"
 import { Header } from "@/components/Header"
-import { DashboardContent } from "@/components/DashboardContent"
+import { Deliveries } from "@/components/Deliveries"
 
-export default function Home() {
+export default function DeliveriesPage() {
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-8">
         <Header />
-        <DashboardContent />
+        <Deliveries />
       </main>
     </div>
   )

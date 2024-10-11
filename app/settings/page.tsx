@@ -1,14 +1,14 @@
 import { Sidebar } from "@/components/Sidebar"
 import { Header } from "@/components/Header"
-import { DashboardContent } from "@/components/DashboardContent"
+import { Settings } from "@/components/Settings"
 
-export default function Home() {
+export default function SettingsPage() {
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-8">
         <Header />
-        <DashboardContent />
+        <Settings />
       </main>
     </div>
   )
