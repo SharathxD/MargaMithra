@@ -22,13 +22,6 @@ export function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex items-center space-x-2">
-              <img
-                src="/placeholder.svg"
-                alt="User"
-                className="w-6 h-6 rounded-full"
-                width={24}
-                height={24}
-              />
               <span>John Doe</span>
               <ChevronDown className="h-4 w-4" />
             </Button>
