@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button"
 
 export function Settings() {
   const [settings, setSettings] = useState({
-    companyName: "Optiroute Inc.",
-    email: "contact@optiroute.com",
+    companyName: "MargaMithra Inc.",
+    email: "contact@margamithra.com",
     notificationsEnabled: true,
     darkModeEnabled: false,
   })

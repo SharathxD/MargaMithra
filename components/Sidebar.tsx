@@ -18,7 +18,7 @@ export function Sidebar() {
   return (
     <aside className="w-64 bg-white shadow-md">
       <div className="p-4">
-        <h1 className="text-2xl font-bold">Optiroute</h1>
+        <h1 className="text-2xl font-bold">MargaMithra</h1>
       </div>
       <nav className="mt-6">
         {navItems.map((item) => {

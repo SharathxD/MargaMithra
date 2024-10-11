@@ -5,7 +5,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Optiroute - Dynamic Route Optimization",
+  title: "MargaMithra - Dynamic Route Optimization",
   description: "Efficient delivery management and route optimization",
 }
 
