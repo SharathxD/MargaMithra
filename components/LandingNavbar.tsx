@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 
 export function LandingNavbar() {
   return (
-    <nav className="bg-background border-b">
+    <nav className="fixed top-0 left-0 right-0 bg-background border-b z-10">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           Optiroute
@@ -14,10 +14,10 @@ export function LandingNavbar() {
           <Link href="/" className="text-foreground hover:text-primary">
             Home
           </Link>
-          <Link href="#features" className="text-foreground hover:text-primary">
+          <Link href="/features" className="text-foreground hover:text-primary">
             Features
           </Link>
-          <Link href="#contact" className="text-foreground hover:text-primary">
+          <Link href="/contact" className="text-foreground hover:text-primary">
             Contact Us
           </Link>
         </div>
