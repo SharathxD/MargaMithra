@@ -18,40 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
-// Define a type for vehicle types
-type VehicleType = 
-  | "Car-Type-Mini"
-  | "Car-Type-Supermini"
-  | "Car-Type-LowerMedium"
-  | "Car-Type-UpperMedium"
-  | "Car-Type-Executive"
-  | "Car-Type-Luxury"
-  | "Car-Type-Sports"
-  | "Car-Type-4x4"
-  | "Car-Type-MPV"
-  | "Car-Size-Small"
-  | "Car-Size-Medium"
-  | "Car-Size-Large"
-  | "Car-Size-Average"
-  | "Motorbike-Size-Small"
-  | "Motorbike-Size-Medium"
-  | "Motorbike-Size-Large"
-  | "Motorbike-Size-Average"
-  | "Bus-LocalAverage"
-  | "Bus-Coach"
-  | "Taxi-Local"
-  | "Train-National"
-  | "Train-Local"
-  | "Train-Tram";
-
-// Define a type for fuel types
-type FuelType = 
-  | "Unknown"
-  | "Petrol"
-  | "Diesel";
-
-// Update your state variable to use the new type
-const vehicleTypes: { value: VehicleType; label: string }[] = [
+const vehicleTypes = [
   { value: "Car-Type-Mini", label: "Car-Type-Mini" },
   { value: "Car-Type-Supermini", label: "Car-Type-Supermini" },
   { value: "Car-Type-LowerMedium", label: "Car-Type-LowerMedium" },
@@ -82,45 +49,18 @@ const distanceUnits = [
   { value: "miles", label: "Miles" },
 ];
 
-const fuelTypes: { value: FuelType; label: string }[] = [
+const fuelTypes = [
   { value: "Unknown", label: "Unknown" },
   { value: "Petrol", label: "Petrol" },
   { value: "Diesel", label: "Diesel" },
 ];
 
-// Threshold CO2 emissions per km for different vehicle types
-const co2Thresholds: Record<VehicleType, number> = {
-  "Car-Type-Mini": 0.1,
-  "Car-Type-Supermini": 0.09,
-  "Car-Type-LowerMedium": 0.12,
-  "Car-Type-UpperMedium": 0.15,
-  "Car-Type-Executive": 0.2,
-  "Car-Type-Luxury": 0.25,
-  "Car-Type-Sports": 0.3,
-  "Car-Type-4x4": 0.22,
-  "Car-Type-MPV": 0.18,
-  "Car-Size-Small": 0.1,
-  "Car-Size-Medium": 0.15,
-  "Car-Size-Large": 0.2,
-  "Car-Size-Average": 0.14,
-  "Motorbike-Size-Small": 0.05,
-  "Motorbike-Size-Medium": 0.07,
-  "Motorbike-Size-Large": 0.1,
-  "Motorbike-Size-Average": 0.08,
-  "Bus-LocalAverage": 0.5,
-  "Bus-Coach": 0.45,
-  "Taxi-Local": 0.2,
-  "Train-National": 0.1,
-  "Train-Local": 0.08,
-  "Train-Tram": 0.06,
-};
-
 export default function CO2EmissionsContent() {
-  const [vehicleType, setVehicleType] = useState<VehicleType>(vehicleTypes[0].value);
+  const [vehicleType, setVehicleType] = useState(vehicleTypes[0].value);
   const [initialOdometer, setInitialOdometer] = useState("");
   const [finalOdometer, setFinalOdometer] = useState("");
   const [distanceUnit, setDistanceUnit] = useState(distanceUnits[0].value);
-  const [fuelType, setFuelType] = useState<FuelType>(fuelTypes[0].value);
+  const [fuelType, setFuelType] = useState(fuelTypes[0].value);
   const [result, setResult] = useState<number | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -176,91 +116,107 @@ export default function CO2EmissionsContent() {
 
       // Extract the co2e_kg value from the API response
       if (resultData && resultData.data && resultData.data.co2e_kg) {
-        const emissionsFromApi = parseFloat(resultData.data.co2e_kg);
-        setResult(emissionsFromApi);
-
-        // Calculate the estimated emissions based on the distance and threshold
-        const threshold = co2Thresholds[vehicleType]; // Get the threshold for the selected vehicle type
-        const estimatedEmissions = (distanceInKm * threshold) / 1000; // Convert g to kg
-        console.log("Estimated emissions:", estimatedEmissions);
+        setResult(parseFloat(resultData.data.co2e_kg));
       } else {
         setErrorMessage("No emissions data returned from the API.");
       }
     } catch (error) {
-      console.error("Error fetching emissions data:", error);
-      setErrorMessage("An error occurred while fetching emissions data.");
+      console.error("Error:", error);
+      setErrorMessage(
+        "An error occurred while fetching the emissions data. Please try again later."
+      );
     }
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>CO2 Emissions Calculator</CardTitle>
-        <CardDescription>
-          Calculate your vehicle's CO2 emissions based on odometer readings and vehicle type.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Select onValueChange={(value) => setVehicleType(value as VehicleType)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select vehicle type" />
-          </SelectTrigger>
-          <SelectContent>
-            {vehicleTypes.map((vehicle) => (
-              <SelectItem key={vehicle.value} value={vehicle.value}>
-                {vehicle.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Label htmlFor="initialOdometer">Initial Odometer Reading:</Label>
-        <Input
-          id="initialOdometer"
-          type="number"
-          value={initialOdometer}
-          onChange={(e) => setInitialOdometer(e.target.value)}
-        />
-
-        <Label htmlFor="finalOdometer">Final Odometer Reading:</Label>
-        <Input
-          id="finalOdometer"
-          type="number"
-          value={finalOdometer}
-          onChange={(e) => setFinalOdometer(e.target.value)}
-        />
-
-        <Select onValueChange={(value) => setDistanceUnit(value)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select distance unit" />
-          </SelectTrigger>
-          <SelectContent>
-            {distanceUnits.map((unit) => (
-              <SelectItem key={unit.value} value={unit.value}>
-                {unit.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Select onValueChange={(value) => setFuelType(value as FuelType)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select fuel type" />
-          </SelectTrigger>
-          <SelectContent>
-            {fuelTypes.map((fuel) => (
-              <SelectItem key={fuel.value} value={fuel.value}>
-                {fuel.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <Button onClick={calculateEmissions}>Calculate Emissions</Button>
-
-        {result && <div>Calculated Emissions: {result.toFixed(2)} kg</div>}
-        {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-      </CardContent>
-    </Card>
+    <div className="container mx-auto px-4 py-8">
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Calculate Emissions</CardTitle>
+          <CardDescription>Enter vehicle details to calculate CO2 emissions</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="vehicleType">Vehicle Type</Label>
+            <Select value={vehicleType} onValueChange={setVehicleType}>
+              <SelectTrigger id="vehicleType">
+                <SelectValue placeholder="Select vehicle type" />
+              </SelectTrigger>
+              <SelectContent>
+                {vehicleTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="fuelType">Fuel Type</Label>
+            <Select value={fuelType} onValueChange={setFuelType}>
+              <SelectTrigger id="fuelType">
+                <SelectValue placeholder="Select fuel type" />
+              </SelectTrigger>
+              <SelectContent>
+                {fuelTypes.map((fuel) => (
+                  <SelectItem key={fuel.value} value={fuel.value}>
+                    {fuel.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="initialOdometer">Initial Odometer Reading</Label>
+            <Input
+              id="initialOdometer"
+              type="number"
+              placeholder="Enter initial reading"
+              value={initialOdometer}
+              onChange={(e) => setInitialOdometer(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="finalOdometer">Final Odometer Reading</Label>
+            <Input
+              id="finalOdometer"
+              type="number"
+              placeholder="Enter final reading"
+              value={finalOdometer}
+              onChange={(e) => setFinalOdometer(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="distanceUnit">Distance Unit</Label>
+            <Select value={distanceUnit} onValueChange={setDistanceUnit}>
+              <SelectTrigger id="distanceUnit">
+                <SelectValue placeholder="Select unit" />
+              </SelectTrigger>
+              <SelectContent>
+                {distanceUnits.map((unit) => (
+                  <SelectItem key={unit.value} value={unit.value}>
+                    {unit.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={calculateEmissions} className="w-full">Calculate Emissions</Button>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        </CardContent>
+      </Card>
+      {result !== null && distance !== null && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Calculation Result</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold text-primary">{result} kg CO2</p>
+            <p className="text-muted-foreground">Estimated CO2 emissions for your trip</p>
+            <p className="text-muted-foreground">Distance traveled: {distance} km</p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 }
