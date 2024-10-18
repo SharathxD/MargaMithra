@@ -4,7 +4,7 @@ import { Deliveries } from "@/components/Deliveries"
 
 export default function DeliveriesPage() {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-pewter-400">
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-8">
         <Header />

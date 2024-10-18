@@ -12,14 +12,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 export function Header() {
   const router = useRouter()
 
   return (
     <header className="flex justify-between items-center mb-8">
-      <h2 className="text-3xl font-bold">Dashboard</h2>
+      <h2 className="text-3xl font-bold text-primary">Dashboard</h2>
       <div className="flex items-center space-x-4">
+        <ThemeToggle />
         <Button variant="outline" size="icon" asChild>
           <Link href="/notifications">
             <Bell className="h-4 w-4" />

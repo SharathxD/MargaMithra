@@ -39,7 +39,7 @@ export default function FeaturesPage() {
     <div className="min-h-screen bg-background">
       <LandingNavbar />
       <main className="container mx-auto px-6 py-12 pt-24">
-        <h1 className="text-4xl font-bold mb-8 text-center">Our Features</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center text-primary">Our Features</h1>
         <div className="grid md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
             <div key={index} className="bg-card text-card-foreground rounded-lg shadow-md overflow-hidden">
@@ -51,7 +51,7 @@ export default function FeaturesPage() {
                 className="w-full h-64 object-cover"
               />
               <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-2">{feature.title}</h2>
+                <h2 className="text-2xl font-semibold mb-2 text-secondary">{feature.title}</h2>
                 <p className="text-muted-foreground">{feature.description}</p>
               </div>
             </div>
