@@ -56,14 +56,7 @@ export function Settings() {
           />
           <Label htmlFor="notifications">Enable notifications</Label>
         </div>
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="darkMode"
-            checked={settings.darkModeEnabled}
-            onCheckedChange={(checked) => handleSettingChange("darkModeEnabled", checked)}
-          />
-          <Label htmlFor="darkMode">Enable dark mode</Label>
-        </div>
+
       </CardContent>
       <CardFooter>
         <Button onClick={handleSave}>Save Changes</Button>
