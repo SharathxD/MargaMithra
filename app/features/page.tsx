@@ -29,7 +29,7 @@ const features = [
   },
   { 
     title: 'Integration Capabilities', 
-    description: 'Seamlessly integrate Optiroute with your existing systems, including CRM, ERP, and e-commerce platforms for a unified workflow.',
+    description: 'Seamlessly integrate MargaMithra with your existing systems, including CRM, ERP, and e-commerce platforms for a unified workflow.',
     image: '/feature-integration.jpg'
   },
 ]
