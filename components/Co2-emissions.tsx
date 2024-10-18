@@ -55,6 +55,33 @@ const fuelTypes = [
   { value: "Diesel", label: "Diesel" },
 ];
 
+// Threshold CO2 emissions per km for different vehicle types
+const co2Thresholds = {
+  "Car-Type-Mini": 0.1,
+  "Car-Type-Supermini": 0.09,
+  "Car-Type-LowerMedium": 0.12,
+  "Car-Type-UpperMedium": 0.15,
+  "Car-Type-Executive": 0.2,
+  "Car-Type-Luxury": 0.25,
+  "Car-Type-Sports": 0.3,
+  "Car-Type-4x4": 0.22,
+  "Car-Type-MPV": 0.18,
+  "Car-Size-Small": 0.1,
+  "Car-Size-Medium": 0.15,
+  "Car-Size-Large": 0.2,
+  "Car-Size-Average": 0.14,
+  "Motorbike-Size-Small": 0.05,
+  "Motorbike-Size-Medium": 0.07,
+  "Motorbike-Size-Large": 0.1,
+  "Motorbike-Size-Average": 0.08,
+  "Bus-LocalAverage": 0.5,
+  "Bus-Coach": 0.45,
+  "Taxi-Local": 0.2,
+  "Train-National": 0.1,
+  "Train-Local": 0.08,
+  "Train-Tram": 0.06,
+};
+
 export default function CO2EmissionsContent() {
   const [vehicleType, setVehicleType] = useState(vehicleTypes[0].value);
   const [initialOdometer, setInitialOdometer] = useState("");
@@ -116,7 +143,19 @@ export default function CO2EmissionsContent() {
 
       // Extract the co2e_kg value from the API response
       if (resultData && resultData.data && resultData.data.co2e_kg) {
-        setResult(parseFloat(resultData.data.co2e_kg));
+        const emissionsFromApi = parseFloat(resultData.data.co2e_kg);
+        setResult(emissionsFromApi);
+
+        // Calculate the estimated emissions based on the distance and threshold
+        const threshold = co2Thresholds[vehicleType]; // Get the threshold for the selected vehicle type
+        const estimatedEmissions = threshold * distanceInKm; // Calculate estimated emissions
+
+        // Check if the emissions exceed the threshold
+        if (emissionsFromApi > estimatedEmissions) {
+          alert(
+            "Warning: CO2 emitted is more than the threshold for this vehicle type."
+          ); // Use browser alert for warning
+        }
       } else {
         setErrorMessage("No emissions data returned from the API.");
       }
@@ -167,30 +206,28 @@ export default function CO2EmissionsContent() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="initialOdometer">Initial Odometer Reading</Label>
+            <Label htmlFor="initialOdometer">Initial Odometer (km or miles)</Label>
             <Input
-              id="initialOdometer"
-              type="number"
-              placeholder="Enter initial reading"
+              type="text"
               value={initialOdometer}
               onChange={(e) => setInitialOdometer(e.target.value)}
+              placeholder="Initial Odometer"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="finalOdometer">Final Odometer Reading</Label>
+            <Label htmlFor="finalOdometer">Final Odometer (km or miles)</Label>
             <Input
-              id="finalOdometer"
-              type="number"
-              placeholder="Enter final reading"
+              type="text"
               value={finalOdometer}
               onChange={(e) => setFinalOdometer(e.target.value)}
+              placeholder="Final Odometer"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="distanceUnit">Distance Unit</Label>
             <Select value={distanceUnit} onValueChange={setDistanceUnit}>
               <SelectTrigger id="distanceUnit">
-                <SelectValue placeholder="Select unit" />
+                <SelectValue placeholder="Select distance unit" />
               </SelectTrigger>
               <SelectContent>
                 {distanceUnits.map((unit) => (
@@ -201,22 +238,22 @@ export default function CO2EmissionsContent() {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={calculateEmissions} className="w-full">Calculate Emissions</Button>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <Button onClick={calculateEmissions}>Calculate</Button>
+          {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+          {result !== null && (
+            <div className="mt-4">
+              <strong>Calculated Emissions: </strong>
+              {result.toFixed(2)} kg CO2e
+            </div>
+          )}
+          {distance !== null && (
+            <div className="mt-4">
+              <strong>Distance Traveled: </strong>
+              {distance.toFixed(2)} km
+            </div>
+          )}
         </CardContent>
       </Card>
-      {result !== null && distance !== null && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Calculation Result</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-primary">{result} kg CO2</p>
-            <p className="text-muted-foreground">Estimated CO2 emissions for your trip</p>
-            <p className="text-muted-foreground">Distance traveled: {distance} km</p>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 }
