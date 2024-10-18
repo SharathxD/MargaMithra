@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { LineChart, Truck, Package, Users, Settings } from "lucide-react"
 
 const navItems = [
-  { name: "Overview", href: "/", icon: LineChart },
+  { name: "Overview", href: "/dashboard", icon: LineChart },
   { name: "Fleet Management", href: "/fleet", icon: Truck },
   { name: "Deliveries", href: "/deliveries", icon: Package },
   { name: "Drivers", href: "/drivers", icon: Users },
