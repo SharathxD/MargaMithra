@@ -8,7 +8,7 @@ export function LandingNavbar() {
     <nav className="bg-background border-b">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
-          MargaMithra
+          Optiroute
         </Link>
         <div className="space-x-4">
           <Link href="/" className="text-foreground hover:text-primary">

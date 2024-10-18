@@ -8,7 +8,7 @@ export default function LandingPage() {
       <LandingNavbar />
       <main className="container mx-auto px-6 py-12">
         <section className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Welcome to MargaMithra</h1>
+          <h1 className="text-4xl font-bold mb-4">Welcome to Optiroute</h1>
           <p className="text-xl text-muted-foreground mb-8">Optimize your delivery routes with AI-powered technology</p>
           <Button asChild size="lg">
             <Link href="/signup">Get Started</Link>
