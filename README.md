@@ -47,5 +47,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # Co2 Emissions Estimator
 ![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_Before.jpg")
 
-# RCo2 Emission Estimator with Notification
+# Co2 Emission Estimator with Notification
 ![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_After.jpg")
