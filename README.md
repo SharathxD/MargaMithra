@@ -39,13 +39,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ![mainpage](https://github.com/SharathxD/lol/blob/master/assets/images/LandingPage.jpg)
 
 # Dashboard
-![dashboard](https://github.com/SharathxD/lol/blob/master/assets/images/Dashboard_Overview.jpg)
+![dashboard](https://github.com/SharathxD/lol/blob/master/assets/images/DashboardOverview.jpg)
 
 # RouteOptimizer
-![Route Optimizer](https://github.com/SharathxD/lol/blob/master/assets/images/Route_Optimization_Map.jpg)
+![Route Optimizer](https://github.com/SharathxD/lol/blob/master/assets/images/RouteOptimizationMap.jpg)
 
 # Co2 Emissions Estimator
-![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_Before.jpg)
+![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2EmissionCalculatorBefore.jpg)
 
 # Co2 Emission Estimator with Notification
-![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_After.jpg)
+![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2EmissionCalculatorAfter.jpg)
