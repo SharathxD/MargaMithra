@@ -22,7 +22,7 @@ export default function LoginPage() {
     { email: "msharathgowda7@gmail.com",username:"Sharath", password: "mSG149" }
   ];
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: { preventDefault: () => void; }) => {
     e.preventDefault(); // Prevent the default form submission
 
     // Check credentials
