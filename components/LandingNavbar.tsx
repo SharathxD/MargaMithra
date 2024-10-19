@@ -28,7 +28,7 @@ export function LandingNavbar() {
   <div className="flex items-center space-x-2">
     <ThemeToggle />
     <Button variant="outline" asChild>
-      <Link href="/dashboard">Log In</Link>
+      <Link href="/login">Log In</Link>
     </Button>
     <Button asChild>
       <Link href="/signup">Sign Up</Link>
