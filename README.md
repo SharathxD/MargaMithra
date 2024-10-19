@@ -1,39 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Marga Mitra 
 
-## Getting Started
+Marga Mitra is a comprehensive platform aimed at revolutionizing logistics and fleet management by offering advanced route optimization, fleet oversight, and emission tracking. Whether you're running a logistics business, managing a large fleet of vehicles, or seeking to reduce your carbon footprint, Marga Mitra provides tools to enhance efficiency, reduce costs, and support sustainable operations.
+
+## Why Marga Mitra?
+Efficient Routes: Optimize delivery times, reduce fuel consumption, and adapt to real-time traffic.
+Fleet Management: Gain complete control over your fleet's operations, monitor vehicle health, and track performance.
+Sustainability Focus: Track and reduce emissions to meet regulatory standards and contribute to a greener environment.
+
 
 First, run the development server:
 
 ```bash
+npm i
+# and
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Frontend Deployed version of the APP
 
-## Deploy on Vercel
+Check out our [MargaMithra](https://margamithra.vercel.app/) 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Just Click on the Login to have the Initial UserInterface of the APP
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 # Landing Page
 ![mainpage](https://github.com/SharathxD/lol/blob/master/assets/images/LandingPage.jpg)
@@ -42,7 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ![dashboard](https://github.com/SharathxD/lol/blob/master/assets/images/DashboardOverview.jpg)
 
 # RouteOptimizer
-![Route Optimizer](https://github.com/SharathxD/lol/blob/master/assets/images/RouteOptimizationMap.jpg)
+![Route Optimizer](https://github.com/SharathxD/lol/blob/master/assets/images/RouteOptimization.jpg)
 
 # Co2 Emissions Estimator
 ![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2EmissionCalculatorBefore.jpg)
