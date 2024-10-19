@@ -44,3 +44,13 @@ Just Click on the Login to have the Initial UserInterface of the APP
 
 # Co2 Emission Estimator with Notification
 ![Co2 Emissions](https://github.com/SharathxD/lol/blob/master/assets/images/CO2EmissionCalculatorAfter.jpg)
+
+# TECH STACK 
+
+Frontend : Next.js
+
+API's USED :
+
+1. Carbonsutra API  -> for Co2 Emission Estimator.
+2. OnFleet API -> for FleetManagement.
+3. TomTom API & Mapbox API -> for RouteOptimization.
