@@ -36,7 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 # Landing Page
-![landing page]("assets/images/CO2EmissionCalculatorAfter.jpg")
+![mainpage](https://github.com/SharathxD/NASA_SPACE_APPS_CHALLENGE/blob/main/assets/images/main.png)
 
 # Dashboard
 ![dashboard]("https://github.com/SharathxD/lol/blob/master/assets/images/Dashboard_Overview.jpg")
