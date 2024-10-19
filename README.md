@@ -36,10 +36,16 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 # Landing Page
-![landingpage]("https://github.com/SharathxD/lol/blob/master/assets/images/landing.png")
+![landingpage]("https://github.com/SharathxD/lol/blob/master/assets/images/Landing_page.jpg")
 
 # Dashboard
-![dashboard]("https://github.com/SharathxD/lol/blob/master/assets/images/dashboard.png")
+![dashboard]("https://github.com/SharathxD/lol/blob/master/assets/images/Dashboard_Overview.jpg")
 
-# Co2Emissions Estimator
-![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/Co2Emissions.png")
+# RouteOptimizer
+![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/Route_Optimization_Map.jpg")
+
+# Co2 Emissions Estimator
+![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_Before.jpg")
+
+# RCo2 Emission Estimator with Notification
+![Co2]("https://github.com/SharathxD/lol/blob/master/assets/images/CO2_Emission_Calculator_After.jpg")
