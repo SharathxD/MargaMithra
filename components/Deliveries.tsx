@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 
 const initialDeliveries = [
-  { id: 1, orderId: "ORD001", customer: "John Doe", address: "123 Main St, Anytown, USA", status: "In Transit" },
+  { id: 1, orderId: "ORD001", customer: "User", address: "123 Main St, Anytown, USA", status: "In Transit" },
   { id: 2, orderId: "ORD002", customer: "Jane Smith", address: "456 Elm St, Othertown, USA", status: "Delivered" },
   { id: 3, orderId: "ORD003", customer: "Bob Johnson", address: "789 Oak St, Somewhere, USA", status: "Pending" },
 ]

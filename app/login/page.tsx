@@ -16,10 +16,10 @@ export default function LoginPage() {
 
   // Valid credentials for demonstration purposes
   const validCredentials = [
-    { email: "vaibhavninja1234@gmail.com", password: "VSH123" },
-    { email: "priyaharisun2004@gmail.com", password: "SHp456" },
-    { email: "psbbsrb170188@gmail.com", password: "SrB789*8" },
-    { email: "msharathgowda7@gmail.com", password: "mSG149" }
+    { email: "vaibhavninja1234@gmail.com",username:"Vaibhav" ,password: "VSH123" },
+    { email: "priyaharisun2004@gmail.com",username:"HariPriya", password: "SHp456" },
+    { email: "psbbsrb170188@gmail.com", username:"Srujana",password: "SrB789*8" },
+    { email: "msharathgowda7@gmail.com",username:"Sharath", password: "mSG149" }
   ];
 
   const handleLogin = (e) => {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import 'mapbox-gl/dist/mapbox-gl.css'
+import '@tomtom-international/web-sdk-maps/dist/maps.css'
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 

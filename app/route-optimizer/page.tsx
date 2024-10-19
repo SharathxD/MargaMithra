@@ -3,8 +3,11 @@
 import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import tt from '@tomtom-international/web-sdk-maps'
+import tt from '@tomtom-international/web-sdk-services'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
+
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1Ijoic3ViaGFtcHJlZXQiLCJhIjoiY2toY2IwejF1MDdodzJxbWRuZHAweDV6aiJ9.Ys8MP5kVTk5P9V2TDvnuDg'
+const TOMTOM_API_KEY = '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv'
 
 export default function OptimizedTrafficTool() {
   const mapContainer = useRef(null)
@@ -15,7 +18,7 @@ export default function OptimizedTrafficTool() {
 
   useEffect(() => {
     if (map.current) return // initialize map only once
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3ViaGFtcHJlZXQiLCJhIjoiY2toY2IwejF1MDdodzJxbWRuZHAweDV6aiJ9.Ys8MP5kVTk5P9V2TDvnuDg'
+    mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -23,6 +26,12 @@ export default function OptimizedTrafficTool() {
       zoom: 12
     })
     map.current.addControl(new mapboxgl.NavigationControl())
+
+    // Initialize TomTom services
+    tt.services.fuzzySearch({
+      key: TOMTOM_API_KEY,
+      query: 'Bengaluru'
+    }).catch(error => console.error('Error initializing TomTom services:', error))
   }, [])
 
   const addWaypoint = () => {
@@ -33,7 +42,7 @@ export default function OptimizedTrafficTool() {
   const geocodeLocation = (location) => {
     return new Promise((resolve, reject) => {
       tt.services.fuzzySearch({
-        key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+        key: TOMTOM_API_KEY,
         query: location
       })
         .then(response => {
@@ -54,7 +63,7 @@ export default function OptimizedTrafficTool() {
     const locations = [startCoord, ...waypointCoords, stopCoord]
 
     return tt.services.calculateRoute({
-      key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+      key: TOMTOM_API_KEY,
       locations: locations,
       routeType: routeType,
       traffic: true
@@ -67,7 +76,13 @@ export default function OptimizedTrafficTool() {
 
           setRouteDetails(prev => ({
             ...prev,
-            [routeType]: { distance, travelTime }
+            [routeType]: { 
+              distance, 
+              travelTime,
+              startCoord,
+              stopCoord,
+              waypoints: waypointCoords
+            }
           }))
 
           updateMapLayer(`${routeType}-route`, result.toGeoJson(), color)
@@ -107,12 +122,12 @@ export default function OptimizedTrafficTool() {
         addCustomMarker(stopCoord, 'stop')
 
         waypointCoords.forEach((coord, index) => {
-          addCustomMarker(coord, `waypoint-${index + 1}`)
+          addCustomMarker(coord, 'waypoint')
         })
 
         setRouteDetails({ fastest: {}, shortest: {} })
 
-        const fastestRoutePromise = calculateRoute(startCoord, stopCoord, waypointCoords, 'fastest', 'orange')
+        const fastestRoutePromise = calculateRoute(startCoord, stopCoord, waypointCoords, 'fastest', 'purple')
         const shortestRoutePromise = calculateRoute(startCoord, stopCoord, waypointCoords, 'shortest', 'green')
 
         Promise.all([fastestRoutePromise, shortestRoutePromise])
@@ -131,22 +146,22 @@ export default function OptimizedTrafficTool() {
 
   const displayRouteComparison = () => {
     const summaryContent = `
-      <h2 class="text-xl font-bold mb-2">Route Comparison</h2>
-      <table class="w-full border-collapse">
+      <h2>Route Comparison</h2>
+      <table style="width:100%; border-collapse: collapse;">
         <tr>
-          <th class="border border-gray-400 p-2">Route Type</th>
-          <th class="border border-gray-400 p-2">Distance (km)</th>
-          <th class="border border-gray-400 p-2">Estimated Time (mins)</th>
+          <th style="border: 1px solid black; padding: 8px;">Route Type</th>
+          <th style="border: 1px solid black; padding: 8px;">Distance (km)</th>
+          <th style="border: 1px solid black; padding: 8px;">Estimated Time (mins)</th>
         </tr>
         <tr>
-          <td class="border border-gray-400 p-2">Fastest</td>
-          <td class="border border-gray-400 p-2">${routeDetails.fastest.distance ? routeDetails.fastest.distance.toFixed(2) : 'N/A'}</td>
-          <td class="border border-gray-400 p-2">${routeDetails.fastest.travelTime ? routeDetails.fastest.travelTime : 'N/A'}</td>
+          <td style="border: 1px solid black; padding: 8px;">General</td>
+          <td style="border: 1px solid black; padding: 8px;">${routeDetails.fastest.distance ? routeDetails.fastest.distance.toFixed(2) : 'N/A'}</td>
+          <td style="border: 1px solid black; padding: 8px;">${routeDetails.fastest.travelTime ? routeDetails.fastest.travelTime : 'N/A'}</td>
         </tr>
         <tr>
-          <td class="border border-gray-400 p-2">Shortest</td>
-          <td class="border border-gray-400 p-2">${routeDetails.shortest.distance ? routeDetails.shortest.distance.toFixed(2) : 'N/A'}</td>
-          <td class="border border-gray-400 p-2">${routeDetails.shortest.travelTime ? routeDetails.shortest.travelTime : 'N/A'}</td>
+          <td style="border: 1px solid black; padding: 8px;">Shortest</td>
+          <td style="border: 1px solid black; padding: 8px;">${routeDetails.shortest.distance ? routeDetails.shortest.distance.toFixed(2) : 'N/A'}</td>
+          <td style="border: 1px solid black; padding: 8px;">${routeDetails.shortest.travelTime ? routeDetails.shortest.travelTime : 'N/A'}</td>
         </tr>
       </table>
     `
@@ -196,7 +211,7 @@ export default function OptimizedTrafficTool() {
       },
       paint: {
         'line-color': color,
-        'line-width': 4
+        'line-width': 8
       }
     })
   }
@@ -211,7 +226,7 @@ export default function OptimizedTrafficTool() {
     if (inputElement.value.length < 2) return
 
     tt.services.fuzzySearch({
-      key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+      key: TOMTOM_API_KEY,
       query: inputElement.value,
       limit: 5
     })
@@ -234,6 +249,25 @@ export default function OptimizedTrafficTool() {
 
   const clearWaypoints = () => {
     setWaypoints([])
+    setRouteDetails({ fastest: {}, shortest: {} })
+    setSummary('')
+  }
+
+  const navigateShortestRoute = () => {
+    if (!routeDetails.shortest.distance) {
+      alert("Shortest route is not calculated yet.")
+      return
+    }
+
+    const startLocation = document.getElementById('startLocation')?.value
+    const stopLocation = document.getElementById('stopLocation')?.value
+
+    const waypoints = routeDetails.shortest.waypoints || []
+    const waypointsParam = waypoints.map(coord => `${coord[1]},${coord[0]}`).join('|')
+
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLocation)}&destination=${encodeURIComponent(stopLocation)}&waypoints=${waypointsParam}`
+
+    window.open(googleMapsUrl, '_blank')
   }
 
   return (
@@ -286,9 +320,15 @@ export default function OptimizedTrafficTool() {
             </button>
             <button
               onClick={clearWaypoints}
-              className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600"
+              className="w-full p-2 mb-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               Clear Waypoints
+            </button>
+            <button
+              onClick={navigateShortestRoute}
+              className="w-full p-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+            >
+              Navigate Shortest Route
             </button>
           </div>
         </div>
