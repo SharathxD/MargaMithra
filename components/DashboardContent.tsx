@@ -1,5 +1,6 @@
 "use client"
 
+import Link from 'next/link'
 import { Package, Users, LineChart, MapPin } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -57,14 +58,23 @@ export function DashboardContent() {
           </Card>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
+        <Card className="col-span-4">
             <CardHeader>
               <CardTitle>Route Optimization</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
-              <div className="aspect-[16/9] rounded-md bg-gray-200 flex items-center justify-center">
-                <MapPin className="h-12 w-12 text-gray-400" />
-              </div>
+              <Link href="/route-optimizer" className="block">
+                <div className="aspect-[16/9] rounded-md bg-muted relative overflow-hidden group">
+                  <img
+                    src="/feature-route-optimization.jpg"
+                    alt="Route Optimization Preview"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-lg font-semibold">Open Route Optimizer</span>
+                  </div>
+                </div>
+              </Link>
             </CardContent>
           </Card>
           <Card className="col-span-3">
