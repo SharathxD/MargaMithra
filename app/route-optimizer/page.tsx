@@ -1,7 +1,10 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState, useRef } from "react";
 import dynamic from 'next/dynamic';
+
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1Ijoic3ViaGFtcHJlZXQiLCJhIjoiY2toY2IwejF1MDdodzJxbWRuZHAweDV6aiJ9.Ys8MP5kVTk5P9V2TDvnuDg';
+const TOMTOM_API_KEY = '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv';
 
 const OptimizedTrafficTool = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -30,12 +33,12 @@ const OptimizedTrafficTool = () => {
   useEffect(() => {
     if (mapboxgl && tt && typeof window !== 'undefined') {
       try {
-        mapboxgl.accessToken = 'pk.eyJ1Ijoic3VicGFwcmVldCIsImEiOiJja3RlYW11Y2YyZm9pM3B6MDQ5dXRuZDNlIn0.DHhyM5tV4mrVZ6dxIqThvA';
+        mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
         if (!map.current && mapContainer.current) {
           map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v11",
-            center: [77.5946, 12.9716], // Center on Bengaluru
+            center: [77.5946, 12.9716],
             zoom: 12,
           });
 
@@ -43,7 +46,7 @@ const OptimizedTrafficTool = () => {
 
           tt.services
             .fuzzySearch({
-              key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+              key: TOMTOM_API_KEY,
               query: "Bengaluru",
             })
             .catch((error: Error) => console.error("Error initializing TomTom services:", error));
@@ -67,7 +70,7 @@ const OptimizedTrafficTool = () => {
       }
       tt.services
         .fuzzySearch({
-          key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+          key: TOMTOM_API_KEY,
           query: location,
         })
         .then((response: any) => {
@@ -102,7 +105,7 @@ const OptimizedTrafficTool = () => {
 
     return tt.services
       .calculateRoute({
-        key: '9ddViCepPxfLnXAkp7xRjpXPMEXbSUuv',
+        key: TOMTOM_API_KEY,
         locations: locations,
         routeType: routeType,
         traffic: true,
@@ -234,30 +237,68 @@ const OptimizedTrafficTool = () => {
     const waypointsParam = waypoints
       .map((coord) => `${coord[1]},${coord[0]}`)
       .join("|");
-    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startLocation)}&destination=${encodeURIComponent(stopLocation)}&waypoints=${waypointsParam}`;
 
-    if (typeof window !== 'undefined') {
-      window.open(googleMapsUrl, "_blank");
-    }
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${startLocation}&destination=${stopLocation}&waypoints=${waypointsParam}&dir_action=navigate`;
+    window.open(url, "_blank");
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Optimized Traffic Tool</h1>
-      <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 lg:pr-4 mb-4">
-          <input type="text" id="startLocation" placeholder="Start Location" className="w-full p-2 mb-2 border rounded" aria-label="Start Location" />
-          <input type="text" id="stopLocation" placeholder="Stop Location" className="w-full p-2 mb-2 border rounded" aria-label="Stop Location" />
-          {waypoints.map((waypoint, index) => (
-            <input key={index} type="text" className="waypoint w-full p-2 mb-2 border rounded" placeholder={`Waypoint ${index + 1}`} aria-label={`Waypoint ${index + 1}`} />
+    <div className="flex h-screen">
+      <div className="w-1/4 p-4 bg-gray-100 overflow-y-auto">
+        <h2 className="text-2xl font-bold mb-4">Optimized Traffic Tool</h2>
+        <div className="space-y-4">
+          <input
+            type="text"
+            id="startLocation"
+            placeholder="Start Location"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            id="stopLocation"
+            placeholder="Stop Location"
+            className="w-full p-2 border rounded"
+          />
+          {waypoints.map((_, index) => (
+            <input
+              key={index}
+              type="text"
+              className="waypoint w-full p-2 border rounded"
+              placeholder={`Waypoint ${index + 1}`}
+            />
           ))}
-          <button onClick={addWaypoint} className="w-full bg-blue-500 text-white py-2 rounded mb-2">Add Waypoint</button>
-          <button onClick={findRoute} className="w-full bg-green-500 text-white py-2 rounded mb-2">Find Route</button>
-          <button onClick={navigateShortestRoute} className="w-full bg-red-500 text-white py-2 rounded">Navigate Shortest Route</button>
-          <div className="mt-4 text-lg" aria-live="polite">{summary}</div>
+          <button
+            onClick={addWaypoint}
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          >
+            Add Waypoint
+          </button>
+          <button
+            onClick={findRoute}
+            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
+          >
+            Find Route
+          </button>
+          <button
+            onClick={navigateShortestRoute}
+            className="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600"
+          >
+            Navigate Shortest Route
+          </button>
         </div>
-        <div className="lg:w-2/3 h-96" ref={mapContainer} aria-label="Map showing optimized routes" />
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold mb-2">Route Summary</h3>
+          <div>
+            Fastest: {routeDetails.fastest.distance?.toFixed(2)} km,{" "}
+            {routeDetails.fastest.travelTime} min
+          </div>
+          <div>
+            Shortest: {routeDetails.shortest.distance?.toFixed(2)} km,{" "}
+            {routeDetails.shortest.travelTime} min
+          </div>
+        </div>
       </div>
+      <div className="w-3/4" ref={mapContainer} />
     </div>
   );
 };
