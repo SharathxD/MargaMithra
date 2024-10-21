@@ -14,27 +14,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState(''); // State for password
   const [errorMessage, setErrorMessage] = useState(''); // State for error message
 
-  // Valid credentials for demonstration purposes
-  const validCredentials = [
-    { email: "vaibhavninja1234@gmail.com",username:"Vaibhav" ,password: "VSH123" },
-    { email: "priyaharisun2004@gmail.com",username:"HariPriya", password: "SHp456" },
-    { email: "psbbsrb170188@gmail.com", username:"Srujana",password: "SrB789*8" },
-    { email: "msharathgowda7@gmail.com",username:"Sharath", password: "mSG149" }
-  ];
-
   const handleLogin = (e: { preventDefault: () => void; }) => {
     e.preventDefault(); // Prevent the default form submission
 
-    // Check credentials
-    const isValid = validCredentials.some(cred => cred.email === email && cred.password === password);
-
-    if (isValid) {
-      // Navigate to the dashboard if credentials are valid
-      router.push('/dashboard');
-    } else {
-      // Show error message if credentials are invalid
-      setErrorMessage('Invalid email or password. Please try again.');
-    }
+    // Simply redirect to the dashboard
+    router.push('/dashboard'); // Navigate to the dashboard
   };
 
   return (

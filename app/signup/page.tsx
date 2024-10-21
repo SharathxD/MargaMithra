@@ -31,7 +31,10 @@ export default function SignupPage() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col">
-          <Button className="w-full">Sign Up</Button>
+          <Button className="w-full">Sign Up
+          <Link href="/login" className="text-primary hover:underline">
+            </Link>
+          </Button>
           <p className="mt-2 text-sm text-center text-muted-foreground">
             Already have an account?{" "}
             <Link href="/login" className="text-primary hover:underline">
