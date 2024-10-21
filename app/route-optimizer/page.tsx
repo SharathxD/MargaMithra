@@ -289,12 +289,12 @@ const OptimizedTrafficTool = () => {
         <div className="mt-4">
           <h3 className="text-xl font-semibold mb-2">Route Summary</h3>
           <div>
-            Fastest: {routeDetails.fastest.distance?.toFixed(2)} km,{" "}
-            {routeDetails.fastest.travelTime} min
+            Fastest: {routeDetails.fastest.distance?.toFixed(2)} km{" "}
+            
           </div>
           <div>
-            Shortest: {routeDetails.shortest.distance?.toFixed(2)} km,{" "}
-            {routeDetails.shortest.travelTime} min
+            Shortest: {routeDetails.shortest.distance?.toFixed(2)} km{" "}
+            
           </div>
         </div>
       </div>
